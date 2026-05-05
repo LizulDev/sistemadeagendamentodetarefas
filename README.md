@@ -7,7 +7,7 @@ Projeto desenvolvido para a disciplina de Desenvolvimento Web e Aplicativos. O s
 🛠️ Tecnologias Utilizadas
 Framework: Laravel 11
 
-Linguagem: PHP 8.2
+Linguagem: PHP 8.1
 
 Banco de Dados: MySQL 8.0
 
@@ -18,7 +18,7 @@ Frontend: Blade Templates & Bootstrap 5
 📂 Funcionalidades Implementadas
 O sistema centraliza todas as operações em um Dashboard unificado, permitindo:
 
-- Gestão de Usuários: CRUD completo com validação de dados e suporte a múltiplos telefones (Relacionamento 1:N).
+- Gestão de Usuários: CRUD completo com validação de dados
 
 - Catálogo de Serviços: Cadastro de serviços com descrição e formatação monetária brasileira.
 
@@ -131,14 +131,18 @@ Se você visualizar a página inicial do sistema, o ambiente está funcionando �
   Verifique se o Docker Desktop está aberto.
 
 - **Porta 8080 já está em uso**
-  Feche outros serviços que possam estar usando essa porta
-  ou avise o professor.
+  Feche outros serviços que possam estar usando essa porta.
 
 - **Erro de permissão em arquivos**
   Reinicie os containers:
   ```bash
   docker compose down
   docker compose up -d
+
+  
+- **Erro ao subir contêiners** 
+Verifique se sua rede tem bloqueios para este tipo de aplicação
+
 
 Tenha uma excelente experiência 👌
 
