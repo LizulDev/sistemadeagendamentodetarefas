@@ -59,9 +59,16 @@ class AppointmentController extends Controller
             return back()->withErrors(['scheduled_at' => 'Este horário já está ocupado.']);
         }
 
-        Appointment::create($request->all());
+        $appointment = new Appointment;
 
-        return redirect()->route('appointments.index')->with('success', 'Agendado com sucesso!');
+        $appointment->user_id = $request->user_id;
+        $appointment->service_id = $request->service_id;
+        $appointment->scheduled_at = $request->scheduled_at;
+
+        $appointment->save();
+
+
+        return redirect('/appointments');
     }
 
 
@@ -100,7 +107,7 @@ public function update(Request $request, Appointment $appointment): RedirectResp
 
         $appointment->save();
 
-        return redirect('/appointments')->with('success', 'Agendamento atualizado com sucesso!');
+        return redirect('/appointments');
     }
 
     //no agendamento você geralmente aplica uma regra de negócio baseada em tempo 
@@ -122,7 +129,7 @@ public function confirmDelete(Request $request, Appointment $appointment): View 
     /**
      * Delete.
      */
-public function delete(Request $request, User $user): RedirectResponse { 
+public function delete(Request $request, Appointment $appointment): RedirectResponse { 
 
         // Regra de Negócio: Impedir exclusão de agendamentos para o dia atual
     // Isso garante que o serviço não seja cancelado "em cima da hora"
@@ -141,6 +148,7 @@ public function delete(Request $request, User $user): RedirectResponse {
 
     $appointment->delete();
 
-    return redirect('/appointments')->with('success', 'Agendamento removido com sucesso.');
-    }
+    return redirect('/appointments');
+}
+
 }

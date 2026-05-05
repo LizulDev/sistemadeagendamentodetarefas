@@ -116,7 +116,7 @@ class ServiceController extends Controller
     { 
         $service->delete();
  
-        return redirect('/services').with('success','Serviço removido com sucesso!');
+        return redirect('/services');
     }
 
     
