@@ -1,24 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Users</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <title>Lista de Usuários</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    <h1>
-        Users
-    </h1>
+<body class="container mt-4">
 
-    <a href="/users/create" class="btn btn-primary my-1">Criar usuário</a>
+    <div class="border-bottom pb-2 mb-4 d-flex justify-content-between align-items-center">
+        <h2>Usuários Cadastrados</h2>
+        <a href="/users/create" class="btn btn-success btn-sm">Novo Cadastro</a>
+    </div>
 
-    <table class="table">
+    <!-- Busca Simples -->
+    <form action="/users" method="GET" class="row g-2 mb-4">
+        <div class="col-auto">
+            <input type="text" name="search" class="form-control" placeholder="Buscar nome..." value="{{ request('search') }}">
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-secondary">Pesquisar</button>
+        </div>
+    </form>
+
+    <table class="table table-bordered table-striped">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Name</th>
+                <th>ID</th>
+                <th>Nome</th>
                 <th>E-mail</th>
                 <th>Ações</th>
             </tr>
@@ -26,26 +34,21 @@
         <tbody>
             @foreach ($users as $user)
             <tr>
-                <td>{{$user->id}}</td>
-                <td>{{$user->name}}</td>
-                <td>{{$user->email}}</td>
+                <td>{{ $user->id }}</td>
+                <td>{{ $user->name }}</td>
+                <td>{{ $user->email }}</td>
                 <td>
-                    <a
-                        href="/users/{{$user->id}}"
-                        class="btn btn-primary"
-                    >
-                        Alterar
-                    </a>
-                    <a
-                        href="/users/{{$user->id}}/delete"
-                        class="btn btn-danger"
-                    >
-                        Excluir
-                    </a>
+                    <a href="/users/{{ $user->id }}" class="btn btn-primary btn-sm">Editar</a>
+                    <a href="/users/{{ $user->id }}/delete" class="btn btn-danger btn-sm">Excluir</a>
                 </td>
             </tr>
             @endforeach
         </tbody>
     </table>
+
+    <div class="mt-3">
+        <a href="/dashboard">Voltar ao Menu Principal</a>
+    </div>
+
 </body>
 </html>

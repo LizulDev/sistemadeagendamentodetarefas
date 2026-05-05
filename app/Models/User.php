@@ -45,10 +45,11 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the phones for the user.
+     * Get the appointments for the user.
      */
-    public function phones(): HasMany
+    public function appointments(): HasMany
     {
-        return $this->hasMany(Phone::class);
+        return $this->hasMany(Appointment::class);
     }
+
 }

@@ -6,15 +6,17 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('phones', function (Blueprint $table) {
+        Schema::create('services', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
-            $table->string('number')->unique();
+            $table->string('name'); // Nome do serviço (ex: Corte, Barba, Manicure)
+            $table->decimal('price', 8, 2); // Preço com até 8 dígitos e 2 casas decimais
+            $table->text('description')->nullable(); // Descrição opcional
             $table->timestamps();
         });
     }
@@ -24,6 +26,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('phones');
+        Schema::dropIfExists('services');
     }
+
+
 };

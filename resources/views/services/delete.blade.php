@@ -9,12 +9,16 @@
 </head>
 <body>
     <h1>
-        Users / Edit
+        Users / Delete
     </h1>
+
+    <p>
+        Confirma a exclusão do user a seguir?
+    </p>
 
     <form method="POST" action="/users/{{$user->id}}">
         @csrf
-        @method('PUT')
+        @method('DELETE')
 
         <div class="mb-3">
             <label class="form-label">
@@ -25,6 +29,7 @@
                 class="form-control"
                 name="name"
                 value="{{$user->name}}"
+                disabled
             >
         </div>
 
@@ -37,11 +42,12 @@
                 class="form-control"
                 name="email"
                 value="{{$user->email}}"
+                disabled
             >
         </div>
 
         <a href="/users" class="btn btn-secondary">Voltar</a>
-        <button type="submit" class="btn btn-primary">Enviar</button>
+        <button type="submit" class="btn btn-danger">Excluir</button>
     </form>
 
     @if ($errors->any())
@@ -53,8 +59,5 @@
             </ul>
         </div>
     @endif
-
-    <br>
-
 </body>
 </html>

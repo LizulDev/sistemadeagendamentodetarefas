@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Phone;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
@@ -13,10 +12,22 @@ class UserController extends Controller
     /**
      * Index.
      */
-    public function index(): View
-    {
+    public function index(Request $request): View{
+        
+        $query = User::query();
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            
+            
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                ->orWhere('email', 'like', "%{$search}%");
+            });
+        }
+
         return view('users.index', [
-            'users' => User::all()
+            'users' => $query->get()
         ]);
     }
 
@@ -58,8 +69,6 @@ class UserController extends Controller
      */
     public function edit(Request $request, User $user): View
     { 
-        $user->load('phones');
-
         return view('users.edit', [
             'user' => $user
         ]);
@@ -111,9 +120,36 @@ class UserController extends Controller
         return redirect('/users');
     }
 
-    /**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+    /*
      * Create phone.
-     */
+    
     public function createPhone(Request $request, User $user): View
     {
         return view('users.phones.create', [
@@ -121,9 +157,9 @@ class UserController extends Controller
         ]);
     }
 
-    /**
+    
      * Store phone.
-     */
+     
     public function storePhone(Request $request, User $user): RedirectResponse
     {
         $request->validate([
@@ -141,13 +177,13 @@ class UserController extends Controller
         return redirect("/users/{$user->id}");
     }
 
-    /**
+    
      * Delete phone.
-     */
+     
     public function deletePhone(Request $request, User $user, Phone $phone): RedirectResponse
     { 
         $phone->delete();
  
         return back();
-    }
+    }*/
 }
