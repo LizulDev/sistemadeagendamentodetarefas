@@ -1,63 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Users</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <title>Excluir Serviço</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    <h1>
-        Users / Delete
-    </h1>
+<body class="container mt-4">
 
-    <p>
-        Confirma a exclusão do user a seguir?
-    </p>
+    <div class="row">
+        <div class="col-md-8">
+            <h3 class="text-danger">Excluir Serviço</h3>
+            <hr>
 
-    <form method="POST" action="/users/{{$user->id}}">
-        @csrf
-        @method('DELETE')
+            <div class="alert alert-warning">
+                <strong>Atenção!</strong> Você tem certeza que deseja excluir o serviço abaixo? Esta ação não pode ser desfeita.
+            </div>
 
-        <div class="mb-3">
-            <label class="form-label">
-                Nome
-            </label>
-            <input
-                type="text"
-                class="form-control"
-                name="name"
-                value="{{$user->name}}"
-                disabled
-            >
+            <!-- Action para o método destroy do ServiceController -->
+            <form method="POST" action="/services/{{ $service->id }}">
+                @csrf
+                @method('DELETE')
+
+                <div class="mb-3">
+                    <label class="form-label">Nome do Serviço:</label>
+                    <input type="text" class="form-control" value="{{ $service->name }}" disabled>
+                </div>
+
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-danger text-white">Confirmar Exclusão</button>
+                    <a href="/services" class="btn btn-outline-secondary">Cancelar e Voltar</a>
+                </div>
+            </form>
+
+            @if ($errors->any())
+                <div class="mt-3 text-danger">
+                    <ul class="small">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
         </div>
+    </div>
 
-        <div class="mb-3">
-            <label class="form-label">
-                E-mail
-            </label>
-            <input
-                type="email"
-                class="form-control"
-                name="email"
-                value="{{$user->email}}"
-                disabled
-            >
-        </div>
-
-        <a href="/users" class="btn btn-secondary">Voltar</a>
-        <button type="submit" class="btn btn-danger">Excluir</button>
-    </form>
-
-    @if ($errors->any())
-        <div class="alert alert-danger mt-3">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
 </body>
 </html>

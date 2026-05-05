@@ -1,93 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Users</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <title>Editar Serviço</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    <h1>
-        Users / Edit
-    </h1>
+<body class="container mt-4">
 
-    <form method="POST" action="/users/{{$user->id}}">
-        @csrf
-        @method('PUT')
+    <div class="row">
+        <div class="col-md-8">
+            <h3>Alterar Serviço</h3>
+            <hr>
 
-        <div class="mb-3">
-            <label class="form-label">
-                Nome
-            </label>
-            <input
-                type="text"
-                class="form-control"
-                name="name"
-                value="{{$user->name}}"
-            >
+            <!-- Action para o método update do ServiceController -->
+            <form method="POST" action="/services/{{ $service->id }}">
+                @csrf
+                @method('PUT')
+
+                <div class="mb-3">
+                    <label class="form-label">Nome do Serviço:</label>
+                    <input type="text" class="form-control" name="name" value="{{ $service->name }}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Preço (R$):</label>
+                    <!-- step="0.01" permite editar centavos -->
+                    <input type="number" class="form-control" name="price" step="0.01" value="{{ $service->price }}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Descrição:</label>
+                    <textarea class="form-control" name="description" rows="3">{{ $service->description }}</textarea>
+                </div>
+
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-primary">Atualizar Serviço</button>
+                    <a href="/services" class="btn btn-outline-secondary">Cancelar</a>
+                </div>
+            </form>
+
+            @if ($errors->any())
+                <div class="mt-3 text-danger">
+                    <ul class="small">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
         </div>
-
-        <div class="mb-3">
-            <label class="form-label">
-                E-mail
-            </label>
-            <input
-                type="email"
-                class="form-control"
-                name="email"
-                value="{{$user->email}}"
-            >
-        </div>
-
-        <a href="/users" class="btn btn-secondary">Voltar</a>
-        <button type="submit" class="btn btn-primary">Enviar</button>
-    </form>
-
-    @if ($errors->any())
-        <div class="alert alert-danger mt-3">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
-    <br>
-
-    <h3>Phones</h3>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Número</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($user->phones as $phone)
-            <tr>
-                <td>{{$phone->number}}</td>
-                <td>
-                    <form method="POST" action="/users/{{$user->id}}/phone/{{$phone->id}}">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger">Excluir</button>
-                    </form>
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
-
-    <div>
-        <a
-            href="/users/{{$user->id}}/phone"
-            class="btn btn-primary my-3"
-        >
-            Adicionar telefone
-        </a>
     </div>
+
 </body>
 </html>

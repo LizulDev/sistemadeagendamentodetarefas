@@ -49,7 +49,7 @@ class ServiceController extends Controller
             'name.required' => 'O campo nome é obrigatório',
         ]);
  
-        $service = new User;
+        $service = new Service;
  
         $service->name = $request->name;
         $service->price = $request->price;
@@ -65,7 +65,7 @@ class ServiceController extends Controller
      */
     public function edit(Request $request, Service $service): View
     { 
-        $user->load('services');
+        //$service->load('services');
 
         return view('services.edit', [
             'service' => $service
@@ -75,7 +75,7 @@ class ServiceController extends Controller
     /**
      * Update.
      */
-    public function update(Request $request, User $service): RedirectResponse
+    public function update(Request $request, Service $service): RedirectResponse
     {
         $request->validate([
             'name' => 'required|max:255',
@@ -90,25 +90,31 @@ class ServiceController extends Controller
  
         $service->save();
  
-        return redirect('/users');
+        return redirect('/services');
     }
 
     /**
      * Confirm delete.
      */
-    public function confirmDelete(Request $request, User $service): View
-    { 
-        return view('services.delete', [
-            'services' => $user
-        ]);
+    public function confirmDelete(Request $request, Service $service): View {
+    
+
+        // 2. Verifica se o serviço existe (opcional, mas boa prática)
+        if (!$service) {
+            return redirect('/services')->with('error', 'Serviço não encontrado.');
+        }
+
+        // 3. Passa a variável para a view 'services.delete'
+        return view('services.delete', compact('service'));
+
     }
 
     /**
      * Delete.
      */
-    public function delete(Request $request, User $user): RedirectResponse
+    public function delete(Request $request, Service $service): RedirectResponse
     { 
-        $user->delete();
+        $service->delete();
  
         return redirect('/services').with('success','Serviço removido com sucesso!');
     }

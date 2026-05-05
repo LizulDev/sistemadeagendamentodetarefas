@@ -27,7 +27,7 @@ class Service extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'price' => 'float',
+        'price' => 'decimal:2',
     ];
 
     /**

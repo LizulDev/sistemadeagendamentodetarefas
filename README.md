@@ -1,7 +1,30 @@
-# Desenvolvimento Web e Aplicativos
 
-Projeto utilizado na disciplina **Desenvolvimento Web e Aplicativos** com objetivo de apresentar, de forma prática, os conceitos básicos de
-desenvolvimento web utilizando **Laravel** e **Docker**.
+
+ # 🗓️ Sistema de Agendamento de Serviços
+
+Projeto desenvolvido para a disciplina de Desenvolvimento Web e Aplicativos. O sistema consiste em uma plataforma para gestão de clientes, catálogo de serviços e controle de horários, utilizando uma arquitetura moderna baseada em containers.
+
+🛠️ Tecnologias Utilizadas
+Framework: Laravel 11
+
+Linguagem: PHP 8.2
+
+Banco de Dados: MySQL 8.0
+
+Ambiente: Docker & Docker Compose
+
+Frontend: Blade Templates & Bootstrap 5
+
+📂 Funcionalidades Implementadas
+O sistema centraliza todas as operações em um Dashboard unificado, permitindo:
+
+- Gestão de Usuários: CRUD completo com validação de dados e suporte a múltiplos telefones (Relacionamento 1:N).
+
+- Catálogo de Serviços: Cadastro de serviços com descrição e formatação monetária brasileira.
+
+- Controle de Agendamentos: Vinculação entre clientes e serviços com suporte a campos de data e hora (datetime-local).
+
+- Filtros de Busca: Sistema de filtragem por nome para facilitar a localização de registros.
 
 
 ## 📌 Requisitos
@@ -95,10 +118,10 @@ docker compose exec app php artisan key:generate
 Abra o navegador e acesse:
 
 ```
-http://localhost:8080
+http://localhost:8080/dashboard
 ```
 
-Se você visualizar a página inicial do Laravel, o ambiente está funcionando ✅
+Se você visualizar a página inicial do sistema, o ambiente está funcionando ✅
 
 ---
 
@@ -116,11 +139,6 @@ Se você visualizar a página inicial do Laravel, o ambiente está funcionando �
   ```bash
   docker compose down
   docker compose up -d
-  ```
 
----
+Tenha uma excelente experiência 👌
 
-## 📚 Observação importante
-
-Este projeto será evoluído ao longo do semestre conforme os conteúdos da disciplina.
-Não altere a estrutura do Docker sem orientação do professor.

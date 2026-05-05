@@ -1,63 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Users</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <title>Excluir Usuário</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    <h1>
-        Users / Delete
-    </h1>
+<body class="container mt-4">
 
-    <p>
-        Confirma a exclusão do user a seguir?
-    </p>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="border-bottom pb-2 mb-4">
+                <h3 class="text-danger">Confirmar Exclusão</h3>
+            </div>
 
-    <form method="POST" action="/users/{{$user->id}}">
-        @csrf
-        @method('DELETE')
+            <div class="alert alert-warning mb-4">
+                <strong>Atenção!</strong> Você está prestes a excluir o usuário abaixo. 
+                Se este usuário tiver agendamentos vinculados, isso pode gerar erros de integridade no banco de dados.
+            </div>
 
-        <div class="mb-3">
-            <label class="form-label">
-                Nome
-            </label>
-            <input
-                type="text"
-                class="form-control"
-                name="name"
-                value="{{$user->name}}"
-                disabled
-            >
+            <form method="POST" action="/users/{{ $user->id }}">
+                @csrf
+                @method('DELETE')
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Nome:</label>
+                    <input type="text" class="form-control bg-light" value="{{ $user->name }}" disabled>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">E-mail:</label>
+                    <input type="email" class="form-control bg-light" value="{{ $user->email }}" disabled>
+                </div>
+
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-danger">Sim, Excluir Usuário</button>
+                    <a href="/users" class="btn btn-outline-secondary">Cancelar e Voltar</a>
+                </div>
+            </form>
+
+            @if ($errors->any())
+                <div class="alert alert-danger mt-4">
+                    <ul class="mb-0">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
         </div>
+    </div>
 
-        <div class="mb-3">
-            <label class="form-label">
-                E-mail
-            </label>
-            <input
-                type="email"
-                class="form-control"
-                name="email"
-                value="{{$user->email}}"
-                disabled
-            >
-        </div>
-
-        <a href="/users" class="btn btn-secondary">Voltar</a>
-        <button type="submit" class="btn btn-danger">Excluir</button>
-    </form>
-
-    @if ($errors->any())
-        <div class="alert alert-danger mt-3">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
 </body>
 </html>
