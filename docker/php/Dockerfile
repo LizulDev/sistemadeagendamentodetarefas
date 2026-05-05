@@ -19,4 +19,3 @@ RUN addgroup -g ${GID} appgroup \
 
 USER appuser
 
-CMD php artisan serve --host=0.0.0.0 --port=8080
