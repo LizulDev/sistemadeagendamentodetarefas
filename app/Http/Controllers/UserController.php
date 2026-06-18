@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -73,25 +74,39 @@ class UserController extends Controller
         ]);
     }
 
-    /**
+   /**
      * Update.
      */
     public function update(Request $request, User $user): RedirectResponse
     {
+        // 1. Validação atualizada
         $request->validate([
             'name' => 'required|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
+            // nullable permite que passe em branco. confirmed exige o password_confirmation
+            'password' => 'nullable|min:8|confirmed', 
         ], [
             'name.required' => 'O campo nome é obrigatório',
-            'email.unique' => 'Já existe um user com este e-mail',
+            'email.required' => 'O campo e-mail é obrigatório',
+            'email.unique' => 'Já existe um usuário com este e-mail',
+            'password.min' => 'A senha precisa ter no mínimo 8 caracteres',
+            'password.confirmed' => 'A confirmação da senha não confere',
         ]);
  
+        // 2. Atualiza os dados básicos
         $user->name = $request->name;
         $user->email = $request->email;
  
+        // 3. Verifica se o campo de senha foi preenchido
+        if ($request->filled('password')) {
+            // Se foi preenchido, criptografa e atualiza a senha no model
+            $user->password = Hash::make($request->password);
+        }
+ 
+        // 4. Salva no banco de dados
         $user->save();
  
-        return redirect('/users');
+        return redirect('/users')->with('success', 'Usuário atualizado com sucesso!');
     }
 
     /**

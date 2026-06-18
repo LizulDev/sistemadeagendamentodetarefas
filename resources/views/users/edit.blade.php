@@ -28,7 +28,16 @@
                     <input type="email" class="form-control" name="email" value="{{ $user->email }}" required>
                 </div>
 
-                <!-- Não foi permitida a alteração de senha para evitar complexidades aqui -->
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Nova Senha:</label>
+                    <input type="password" class="form-control" name="password" placeholder="Mínimo de 8 caracteres">
+                    <div class="form-text">Deixe em branco se não quiser alterar a senha atual.</div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Confirmar Nova Senha:</label>
+                    <input type="password" class="form-control" name="password_confirmation" placeholder="Repita a nova senha">
+                </div>
 
                 <div class="mt-4">
                     <button type="submit" class="btn btn-primary">Atualizar Cadastro</button>
