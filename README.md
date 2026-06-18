@@ -26,6 +26,16 @@ O sistema centraliza todas as operações em um Dashboard unificado, permitindo:
 
 - Filtros de Busca: Sistema de filtragem por nome para facilitar a localização de registros.
 
+## Update **
+
+Login e cadastro de novos usuários 
+
+Não é possível:  
+
+- Excluir ou alterar informações de outro usuário
+
+*Possível alterar própria senha*
+
 
 ## 📌 Requisitos
 
