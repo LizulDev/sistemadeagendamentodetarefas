@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+
 
 class UserController extends Controller
 {
@@ -69,6 +71,12 @@ class UserController extends Controller
      */
     public function edit(Request $request, User $user): View
     { 
+            // Opção A: Apenas o próprio usuário pode editar o seu perfil
+        if (Auth::id() !== $user->id) {
+            // Erro 403 (Acesso Negado)
+            abort(403, 'Você não tem permissão para editar outro usuário.');
+        }
+
         return view('users.edit', [
             'user' => $user
         ]);
@@ -114,6 +122,12 @@ class UserController extends Controller
      */
     public function confirmDelete(Request $request, User $user): View
     { 
+        // Opção A: Apenas o próprio usuário pode editar o seu perfil
+        if (Auth::id() !== $user->id) {
+            // Erro 403 (Acesso Negado)
+            abort(403, 'Você não tem permissão para deletar outro usuário.');
+        }
+
         return view('users.delete', [
             'user' => $user
         ]);
